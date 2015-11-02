@@ -11,23 +11,6 @@ require_once 'db.php';
 
 	if($_GET) { 
 				
-		// SECURITY
-		// sanitise input
-		// source url: http://www.phpdevtips.com/2011/06/simplified-data-sanitizing
-		function clean_data( $input ){
-    		$input = trim( htmlentities( strip_tags( $input,"," ) ) );
-
-    		if( get_magic_quotes_gpc() )
-        		$input = stripslashes( $input );
-
-    			$input = mysql_real_escape_string( $input );
-    			return $input;
-			}	
-
-		// sanitise the input from the form
-		$fn = clean_data( $_GET['firstName'] );
-		$ln = clean_data( $_GET['lastName'] );
-
 		$fn = $_GET['firstName'];
 		$ln = $_GET['lastName'];	
 		

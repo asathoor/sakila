@@ -1,7 +1,6 @@
 <?php
-
 /*
-File: delete.php
+File: update.php
 Purpose: delete something in the Sakila sample database
 */
 
@@ -13,47 +12,37 @@ $sql = "SELECT * FROM `actor`\n"
     
 $result =  $mysqli->query($sql); // query
 
-$row = $result->fetch_array(); // fetch associative array
-
-// $row['actor_id'] = NULL; // defined because the next var needs it
-
-$deleteForm = "<form action='deleteAction.php'>\n
-						<input type='hidden' name='delete' value='$row[actor_id]'>\n
-						<button name='Delete' value='Delete' type='submit'>Delete</button>\n
-					</form>\n";
+/* will print out a html form */
+function theUpdateForm($firstName, $lastName, $actorId){
+	?>
+	<tr>	
+	<form action="update-action.php" method='get' enctype='multipart/form-data'>
+		<td><input type='text' name='actorFirstName' value='<?php echo $firstName; ?>'></td>
+		<td><input type='text' name='actorLastName' value='<?php echo $lastName; ?>'></td>
+		<td><input type='hidden' name='id' value='<?php echo $actorId; ?>'></td>
+		<td><input type="submit" name="update" value="Update"> <input type="reset" name="Cancel" value="Cancel"></td>
+	</form>
+	</tr>
+	<?php
+}
+// theUpdateForm('Anton','Berg',43);
 ?>
 
-<h2>Actors</h2>
+<h2>Update</h2>
 
-<p>
-	Delete unwanted actors from the database.
-</p>
+<p>Here you can update the actor names.</p>
 
 <!-- A table for the actors -->
 <table>
 
 <?php
-// looping out a nice table of actors with a deletebutton too.
+// looping out a table of actors with a deletebutton too.
 while($row = $result->fetch_assoc()){
 	
-	// the delete button form used in the table	
-	$deleteForm = "<form action='deleteAction.php'>\n
-						<input type='hidden' name='delete' value='$row[actor_id]'>\n
-						<button name='Delete' value='Delete' type='submit'>Delete</button>\n
-					</form>\n";
-	
-	// tr and td
-    echo "\n<tr>\n<td>" 
-    . $row['first_name'] 
-    . " " 
-    . $row['last_name']
-    . "<td>" 
-    . $deleteForm 
-    . "</td>"
-    . "</td>\n</tr>";
-   }
-
-require_once('footer.php'); // html footer
+	theUpdateForm($row['first_name'],$row['last_name'],$row[actor_id]);
+}
 ?>
 
 </table>
+
+<?php require_once('footer.php'); // html footer ?>

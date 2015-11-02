@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="by Per Thykjaer Jensen" />
+  <title>CRUD - INSERT</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">CRUD - INSERT</h1>
+  <p class="author">
+by Per Thykjaer Jensen
+  </p>
+  <p class="date">Fall 2015</p>
+</div>
+<div id="crud-and-php" class="slide section level1">
+<h1>CRUD and PHP</h1>
+<p>Today's topic is:</p>
+<ul>
+<li>CREATE</li>
+<li>READ</li>
+<li>UPDATE</li>
+<li>DELETE</li>
+</ul>
+</div>
+<div id="sql-for-read" class="slide section level1">
+<h1>SQL for read</h1>
+<pre><code>$sql = &quot;SELECT * FROM `actor` 
+ORDER BY `actor`.`first_name` ASC&quot;;</code></pre>
+</div>
+<div id="the-connection" class="slide section level1">
+<h1>The connection</h1>
+<ul>
+<li>file: db.php</li>
+</ul>
+<pre><code>&lt;?php
+// CONNECT TO THE SAKILA DATABASE
+
+$mysqli = new mysqli(&quot;localhost (or URL)&quot;, 
+    &quot;USER&quot;, 
+    &quot;PASSWORD&quot;,
+    &quot;DATABASE&quot;);
+?&gt;</code></pre>
+</div>
+<div id="read" class="slide section level1">
+<h1>READ</h1>
+<p>Just to repeat the read:</p>
+<h2 id="the-query">The Query</h2>
+<pre><code>$sql = &quot;SELECT * FROM `actor` 
+    ORDER BY `actor`.`first_name` ASC&quot;;
+$result =  $mysqli-&gt;query($sql); // query</code></pre>
+</div>
+<div id="read-loop-out-the-content" class="slide section level1">
+<h1>READ loop out the content</h1>
+<p><em>$result-&gt;fetch_assoc()</em> will create an object organized as an array. Now you can loop out the rows using a <em>while loop</em>:</p>
+<pre><code>while($row = $result-&gt;fetch_assoc()){
+    echo $row[&#39;first_name&#39;] . &quot; &quot;;
+    echo $row[&#39;last_name&#39;]. &#39;&lt;br /&gt;&#39;;
+   }
+
+mysqli_close($mysqli); </code></pre>
+</div>
+<div id="the-finished-file" class="slide section level1">
+<h1>The finished file:</h1>
+<ul>
+<li>See: <em>read.php</em></li>
+</ul>
+</div>
+<div id="insert" class="slide section level1">
+<h1>INSERT</h1>
+<ol style="list-style-type: decimal">
+<li>Create a form like: <em>insert.php</em></li>
+<li>Create the action: <em>action.php</em></li>
+</ol>
+</div>
+<div id="insert-form-insert.php" class="slide section level1">
+<h1>INSERT form insert.php</h1>
+<pre><code>&lt;form action=&quot;action.php&quot; method=&quot;get&quot;&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Enter an actor here&lt;/legend&gt;  
+    First Name &lt;input type=&quot;text&quot; name=&quot;firstName&quot;&gt;&lt;br&gt;
+    Last Name &lt;input type=&quot;text&quot; name=&quot;lastName&quot;&gt;&lt;br&gt;
+    &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;submit&quot;&gt;
+    &lt;button name=&quot;Cancel&quot; value=&quot;Cancel&quot; type=&quot;reset&quot;&gt;Cancel&lt;/button&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre>
+</div>
+<div id="insert-action-action.php" class="slide section level1">
+<h1>INSERT action: action.php</h1>
+<p>If you don't care for security, make your SQL string thus:</p>
+<pre><code>
+$sql = &quot;INSERT INTO `sakila`.`actor` 
+(`actor_id`, `first_name`, `last_name`, `last_update`) 
+VALUES (NULL, &#39;&quot;.$_GET[&#39;firstName&#39;].&quot;&#39;, &#39; 
+&#39;&quot;.$_GET[&#39;lastName&#39;].&quot;&#39;, CURRENT_TIMESTAMP);&quot;;
+</code></pre>
+</div>
+<div id="test-your-sql-string" class="slide section level1">
+<h1>Test your SQL string</h1>
+<p>Just to be sure, test:</p>
+<pre><code>echo $sql;</code></pre>
+</div>
+<div id="insert-query" class="slide section level1">
+<h1>INSERT query</h1>
+<p>Now use mysqli to insert:</p>
+<pre><code>$insert = $mysqli-&gt;query($sql); </code></pre>
+<p>Open PHPMyAdmin and see the result.</p>
+</div>
+<div id="the-insert-files" class="slide section level1">
+<h1>The INSERT files</h1>
+<ul>
+<li>insert.php (html form)</li>
+<li>action.php (insert query)</li>
+</ul>
+</div>
+<div id="exercise-design-an-insert-form" class="slide section level1">
+<h1>Exercise: design an insert form</h1>
+<ol style="list-style-type: decimal">
+<li>Open a table in PhpMyAdmin.</li>
+<li>Design a form with fields for all rows.</li>
+<li>In PhpMyAdmin: insert a post in the table.</li>
+<li>Copy the SQL string to your action.php.</li>
+<li>Add the insert query to action.php.</li>
+<li>Test your file.</li>
+</ol>
+</div>
+<div id="security" class="slide section level1">
+<h1>Security</h1>
+<p>Never ever trust anyone!</p>
+</div>
+<div id="security-validate-data" class="slide section level1">
+<h1>Security: validate data</h1>
+<ol style="list-style-type: decimal">
+<li>Clienside: use HTML5 form validation.</li>
+<li>Serverside: validate input.</li>
+</ol>
+<p>See <a href="http://www.w3schools.com/html/html_form_attributes.asp">HTML Form Attributes</a></p>
+</div>
+<div id="security-serverside" class="slide section level1">
+<h1>Security: Serverside</h1>
+<p>See <span class="citation">[@BeginningPHP, &quot;Checking Input and Encoding Output&quot; s. 679 ff.]</span></p>
+</div>
+<div id="update" class="slide section level1">
+<h1>UPDATE</h1>
+<ol style="list-style-type: decimal">
+<li>Loop out relevant data in a form.</li>
+<li>In the action file use UPDATE.</li>
+</ol>
+</div>
+<div id="update-1" class="slide section level1">
+<h1>UPDATE</h1>
+<ul>
+<li>file: update.php</li>
+</ul>
+</div>
+<div id="update-form-function" class="slide section level1">
+<h1>UPDATE form function</h1>
+<pre><code>function theUpdateForm($firstName, $lastName, $actorId){
+    ?&gt;
+    &lt;tr&gt;    
+    &lt;form action=&quot;update-action.php&quot; method=&#39;get&#39; enctype=&#39;multipart/form-data&#39;&gt;
+        &lt;td&gt;&lt;input type=&#39;text&#39; name=&#39;actorFirstName&#39; value=&#39;&lt;?php echo $firstName; ?&gt;&#39;&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&#39;text&#39; name=&#39;actorLastName&#39; value=&#39;&lt;?php echo $lastName; ?&gt;&#39;&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&#39;hidden&#39; name=&#39;id&#39; value=&#39;&lt;?php echo $actorId; ?&gt;&#39;&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;input type=&quot;submit&quot; name=&quot;update&quot; value=&quot;Update&quot;&gt; &lt;input type=&quot;reset&quot; name=&quot;Cancel&quot; value=&quot;Cancel&quot;&gt;&lt;/td&gt;
+    &lt;/form&gt;
+    &lt;/tr&gt;
+    &lt;?php
+}</code></pre>
+</div>
+<div id="update-loop" class="slide section level1">
+<h1>UPDATE loop</h1>
+<pre><code>&lt;table&gt;
+&lt;?php
+// looping out a table of actors with a deletebutton too.
+while($row = $result-&gt;fetch_assoc()){   
+    theUpdateForm($row[&#39;first_name&#39;],$row[&#39;last_name&#39;],$row[actor_id]);
+}
+?&gt;
+&lt;/table&gt;</code></pre>
+</div>
+<div id="update-actions" class="slide section level1">
+<h1>UPDATE actions</h1>
+<ul>
+<li>file: update-action.php</li>
+</ul>
+</div>
+<div id="update-data-from-the-form" class="slide section level1">
+<h1>Update data from the form</h1>
+<pre><code>$firstName = $_REQUEST[&#39;actorFirstName&#39;];
+$lastName = $_REQUEST[&#39;actorLastName&#39;];
+$id = $_REQUEST[&#39;id&#39;];</code></pre>
+</div>
+<div id="security-1" class="slide section level1">
+<h1>Security</h1>
+<ul>
+<li>Yezzz .... you should!</li>
+</ul>
+</div>
+<div id="update-sql" class="slide section level1">
+<h1>UPDATE SQL</h1>
+<pre><code>$sql = &quot;UPDATE `sakila`.`actor` 
+SET `first_name` = &#39;&quot;. $firstName .&quot;&#39;, 
+`last_name` = &#39;$lastName&#39; 
+WHERE `actor`.`actor_id` = $id;&quot;;</code></pre>
+</div>
+<div id="update-query" class="slide section level1">
+<h1>UPDATE query</h1>
+<pre><code>$mysqli-&gt;query( $sql ) </code></pre>
+</div>
+<div id="exercises" class="slide section level1">
+<h1>Exercises</h1>
+<p>Now choose a table, and create forms and actions for:</p>
+<ul>
+<li>either CREATE</li>
+<li>or READ</li>
+<li>or UPDATE</li>
+<li>or DELETE posts</li>
+</ul>
+<p>... in a table of your own choice.</p>
+</div>
+</body>
+</html>
