@@ -35,8 +35,11 @@ Hacking databases is more or less standard in tech fiction pop film and literatu
 >'SQL injection,' said Andrew. 'It's all on the net. Their security's shit.' 
 
 >Fats looked exhilarated; wildly impressed. Andrew was half pleased, half scared, by the reaction. 
+
 >'You've gotta keep this to — '
+
 >'Lemme do one about Cubby!' 
+
 >'No!' 
 
 > (J.K. Rowlings: *"The Casual Vacancy"*, 2012)
