@@ -7,7 +7,7 @@ Rent DVD - so it is basicly business solution db for a little shop.
 
 ## Get Sakila
 
-* [Download from here](https://dev.mysql.com/doc/index-other.html)
+* [Download the Sakila database](https://dev.mysql.com/doc/index-other.html)
 * [Documentation](https://dev.mysql.com/doc/sakila/en/)
 
 ## Sakila Usage Samples
