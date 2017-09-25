@@ -23,9 +23,11 @@ require_once 'db.php';
 					
 		// INSERT
 		$insert = $mysqli->query($sql);	
+		mysqli_close($mysqli); // close connection
 		
 		echo "<p>New actor added: $fn $ln - Gee thanx a lot.</p>";
 		echo $sql;
+		
 		
 	}
 	else {
