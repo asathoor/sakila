@@ -2,7 +2,7 @@
 /** 
  * file: db.php 
  * purpose: connector
-**/
+*/
 $host = "localhost";
 $password = "mojndo";
 $user = "root";
