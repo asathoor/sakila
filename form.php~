@@ -1,4 +1,4 @@
-<?php require_once 'boilerplate/boiler_header.php'; ?>
+<?php // require_once 'boilerplate/boiler_header.php'; ?>
 
 <!-- Input form -->
 <form action="action.php" method="get">
@@ -13,4 +13,4 @@
 	</fieldset>
 </form>
 
-<?php require_once 'boilerplate/boiler_footer.php'; ?>
+<?php // require_once 'boilerplate/boiler_footer.php'; ?>
