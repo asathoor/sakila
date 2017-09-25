@@ -1,9 +1,11 @@
 THE SAKILA DATABASE
-==============
+===================
 
-## Idea
+( Boilerplate version )
 
-Rent DVD - so it is basicly business solution db for a little shop.
+## CRUD for the Sakila database
+
+Create a frontend for the Sakila database with CRUD functionality.
 
 ## Get Sakila
 
