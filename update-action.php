@@ -7,7 +7,7 @@ Purpose: update sample
 */
 
 /* string from PhpMyAdmin */
-$sql = "UPDATE `sakila`.`actor` SET `first_name` = \'NICKy\' WHERE `actor`.`actor_id` = 2;";
+//$sql = "UPDATE `sakila`.`actor` SET `first_name` = \'NICKy\' WHERE `actor`.`actor_id` = 2;";
 
 /* stripslashes */
 $sql = stripslashes($sql);
@@ -19,6 +19,7 @@ $firstName = $_REQUEST['actorFirstName'];
 $lastName = $_REQUEST['actorLastName'];
 $id = $_REQUEST['id'];
 
+$sql = "UPDATE `sakila`.`actor` SET `first_name` = '". $firstName ."' WHERE `actor`.`actor_id` = ". $id .";";
 ?>
 
 <p>SQL sentence: <?php echo $sql; ?></p>
